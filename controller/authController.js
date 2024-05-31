@@ -5,7 +5,7 @@ authController.loginWithEmail=async (req, res) => {
   try{
     const {email,password}=req.body;
    let user = await User.findOne({email});
- 
+ console.log(email,'email')
     if(!user)throw new Error('user not found');
  const isMatch =await bcrypt.compare(password,user.password)
  if(isMatch){
