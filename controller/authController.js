@@ -6,7 +6,7 @@ authController.loginWithEmail=async (req, res) => {
     const {email,password}=req.body;
    let user = await User.findOne({email});
  console.log(email,'email')
-    if(!user)throw new Error('user not found');
+    if(!user)throw new Error('Invalid email or password');
  const isMatch =await bcrypt.compare(password,user.password)
  if(isMatch){
   const token = await user.generateToken();
