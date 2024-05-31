@@ -17,11 +17,12 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const indexRouter =require('./routes/index');
 require('dotenv/config');
 app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use('/api',indexRouter);
 const mongoURI = process.env.LOCAL_DB_ADDRESS;
 mongoose.connect(mongoURI)
 .then(() => console.log('MongoDB Connected'))
