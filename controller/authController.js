@@ -1,11 +1,13 @@
 const authController={}
 const User=require('../model/User');
 const bcrypt=require('bcryptjs');
+const jwt=require('jsonwebtoken');
+require('dotenv').config();
 authController.loginWithEmail=async (req, res) => {
   try{
     const {email,password}=req.body;
    let user = await User.findOne({email});
- console.log(email,'email')
+
     if(!user)throw new Error('Invalid email or password');
  const isMatch =await bcrypt.compare(password,user.password)
  if(isMatch){
@@ -23,7 +25,23 @@ authController.loginWithEmail=async (req, res) => {
 
 }
 
+authController.authenticate=async(req,res,next)=>{
+  try{
+    const tokenString = req.headers.authorization
+    if(!tokenString)throw new Error('No token provided');
+    const token = tokenString.replace('Bearer ','');
+     jwt.verify(token,process.env.JWT_SECRET_KEY,(error,payload)=>{
+      if(error)throw new Error('Invalid token');
+      req.userId = payload._id;
+    next();
+    });
 
+
+
+  }catch(error){
+    res.status(400).json({status:'authenticate-fail',message:error.message});
+  }
+}
 
 
 

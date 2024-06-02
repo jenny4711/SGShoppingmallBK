@@ -8,8 +8,8 @@ const userController={}
 userController.createUser = async (req, res) => {
  try{
   const {email,password,name,level}=req.body;
-  console.log(req.body,'reqbody')
-  console.log(email)
+ 
+
   const user = await User.findOne({email});
   if(user)throw new Error('user already exists');
   const salt = await bcrypt.genSaltSync(10);
@@ -23,7 +23,17 @@ userController.createUser = async (req, res) => {
  }
 }
 
-userController.login=(req,res)=>{}
+userController.getUser=async(req,res)=>{
+  try{
+    const {userId}=req;
+   
+    const user = await User.findById(userId);
+    if(!user)throw new Error('Invalid token');
+    return res.status(200).json({status:'get-user-success',data:user});
+  }catch(error){
+    res.status(400).json({status:'get-user-fail',message:error.message});
+  }
+}
 
 
 
