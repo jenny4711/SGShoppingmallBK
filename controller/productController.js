@@ -15,6 +15,16 @@ productController.createProduct=async(req,res)=>{
 
 }
 
+productController.getProducts=async(req,res)=>{
+  try{
+    const products = await Product.find({});
+    console.log(products,'getProducts')
+    return res.status(200).json({status:'getProducts-success',products});
+  }catch(error){
+    res.status(400).json({status:'getProducts-fail',message:error.message});
+  }
+}
+
 
 
 
