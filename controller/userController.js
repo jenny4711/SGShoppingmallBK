@@ -5,6 +5,11 @@ require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 const userController={}
 
+userController.startCheck=async(req,res)=>{
+  console.log('service is running!')
+  res.status(200).json({status:'success',message:'server is running'});
+}
+
 userController.createUser = async (req, res) => {
  try{
   const {email,password,name,level}=req.body;
