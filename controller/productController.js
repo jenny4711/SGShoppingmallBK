@@ -1,5 +1,5 @@
 const productController={};
-const Product = require('../model/product');
+const Product = require('../model/Product');
 
 productController.createProduct=async()=>{
   try{
