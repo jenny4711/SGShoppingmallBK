@@ -9,10 +9,12 @@ authController.loginWithEmail=async (req, res) => {
    let user = await User.findOne({email});
 
     if(!user)throw new Error('Invalid email or password');
- const isMatch =await bcrypt.compare(password,user.password)
+ const isMatch = await bcrypt.compare(password,user.password)
  if(isMatch){
   const token = await user.generateToken();
   return res.status(200).json({status:'login-success',data:{user,token}});
+ }else{
+  throw new Error('Invalid email or password');
  }
 
 
