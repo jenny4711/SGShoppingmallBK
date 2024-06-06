@@ -54,7 +54,7 @@ productController.editIsDeleted=async(req,res)=>{
  try{
   const {id}=req.params;
   const isDeleted = await Product.findById({_id:id}).isDeleted
-  const product= await Product.findByIdAndUpdate({_id:id},{isDeleted:!isDeleted},{new:true});
+  const product= await Product.findByIdAndUpdate({_id:id},{isDeleted:true,status:"inactive"},{new:true});
   console.log(product,'editIsDeleted')
   res.status(200).json({status:'editIsDeleted-success',product});
  }catch(error){
