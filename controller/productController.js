@@ -29,13 +29,49 @@ productController.getProducts=async(req,res)=>{
 
    const productList = await query.exec();
    response.data=productList;
-   console.log(response,'responseProduct')
+   
     return res.status(200).json(response);
   }catch(error){
     res.status(400).json({status:'getProducts-fail',message:error.message});
   }
 }
 
+productController.updateProduct=async(req,res)=>{
+  try{
+    const {id}=req.params;
+    const {sku,name,size,image,category,description,price,stock,status}=req.body;
+    if(!Product)throw new Error('Product not found');
+    const product = await Product.findByIdAndUpdate({_id:id},{sku,name,size,image,category,description,price,stock,status},{new:true});
+    res.status(200).json({status:'updateProduct-success',product});
+    
+
+  }catch(error){
+    res.status(400).json({status:'updateProduct-fail',message:error.message});
+  }
+}
+
+productController.editIsDeleted=async(req,res)=>{
+ try{
+  const {id}=req.params;
+  const isDeleted = await Product.findById({_id:id}).isDeleted
+  const product= await Product.findByIdAndUpdate({_id:id},{isDeleted:!isDeleted},{new:true});
+  console.log(product,'editIsDeleted')
+  res.status(200).json({status:'editIsDeleted-success',product});
+ }catch(error){
+  res.status(400).json({status:'editIsDeleted-fail',message:error.message});
+ }
+}
+
+productController.getProductDetail=async(req,res)=>{
+  try{
+    const {id}=req.params;
+    const product = await Product.findById({_id:id});
+    console.log(product,'getProductDetail')
+    res.status(200).json({status:'getProductDetail-success',product});
+  }catch(error){
+    res.status(400).json({status:'getProductDetail-fail',message:error.message});
+  }
+}
 
 
 
