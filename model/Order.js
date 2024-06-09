@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
     shipTo: {
-        type: String,
+        type: Object,
         required: true
     },
     contact: {
-        type: String,
+        type: Object,
         require: true
     },
     userId: {

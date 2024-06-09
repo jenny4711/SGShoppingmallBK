@@ -45,6 +45,8 @@ const productSchema = new Schema({
    
 }, {timestamps: true});
 
+
+
 productSchema.methods.toJSON=function(){
   const obj = this._doc;
   delete obj.__v;
