@@ -20,7 +20,7 @@ orderController.createOrder = async (req, res) => {
       );
       throw new Error(errorMessage);
     }
-
+const orderNumber=randomStringGenerator();
     const newOrder = new Order({
       userId,
       totalPrice,
@@ -28,8 +28,11 @@ orderController.createOrder = async (req, res) => {
       contact,
     
       items: orderList,
-      orderNum: randomStringGenerator(),
+      orderNum: orderNumber
     });
+    const num= randomStringGenerator();
+    console.log(num,'testnum')
+    console.log(newOrder,'newOrder')
     await newOrder.save();
 
     res

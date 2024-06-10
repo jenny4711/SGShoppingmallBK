@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const Cart = require('./Cart');
 const orderSchema = new Schema({
     shipTo: {
         type: Object,
@@ -15,6 +15,11 @@ const orderSchema = new Schema({
         ref: 'User',
         required: true
     },
+    orderNum: {
+            type: String,
+            required: true
+          
+        },
     items: [{
         productId: {
             type: mongoose.ObjectId,
@@ -32,7 +37,8 @@ const orderSchema = new Schema({
         price: {
             type: Number,
             required: true
-        }
+        },
+        
     }]
 
     
@@ -46,6 +52,11 @@ orderSchema.methods.toJSON=function(){
   delete obj.updatedAt;
   return obj;
 }
+orderSchema.post('save',async function(){
+    const cart = await Cart.findOne({userId:this.userId});
+    cart.items=[];
+    await cart.save()
+})
 
 const Order= mongoose.model('Order', orderSchema);
 module.exports = Order;

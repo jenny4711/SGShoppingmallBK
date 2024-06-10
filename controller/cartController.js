@@ -26,7 +26,7 @@ cartController.addToCart=async(req,res)=>{
       cartItemQty: cart.items.length,
     });
   } catch (error) {
-    return res.status(400).json({ status: "fail", error: error.message });
+    res.status(400).json({ status: "fail", error: error.message });
   }
 }
 
