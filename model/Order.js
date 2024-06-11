@@ -10,6 +10,10 @@ const orderSchema = new Schema({
         type: Object,
         require: true
     },
+    totalPrice:{
+        type: Number,
+        required: true
+    },
     userId: {
         type: mongoose.ObjectId,
         ref: 'User',
@@ -19,6 +23,11 @@ const orderSchema = new Schema({
             type: String,
             required: true
           
+        },
+        status:{
+            type: String,
+            default: 'preparing'
+
         },
     items: [{
         productId: {
@@ -48,7 +57,7 @@ const orderSchema = new Schema({
 orderSchema.methods.toJSON=function(){
   const obj = this._doc;
   delete obj.__v;
-  delete obj.createdAt;
+ 
   delete obj.updatedAt;
   return obj;
 }

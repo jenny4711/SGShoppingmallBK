@@ -8,6 +8,7 @@ orderController.createOrder = async (req, res) => {
   try {
     const { userId } = req;
     const { shipTo, contact,totalPrice, orderList } = req.body;
+    console.log(totalPrice,'reqbody')
 
     const insufficientStockItems = await productController.checkItemListStock(
       orderList
@@ -57,6 +58,7 @@ orderController.getOrderList = async (req, res) => {
         .status(400)
         .json({ status: "Couldn't Find!", message: error.error });
     }
+    console.log(order,'order!!!!')
     res.status(200).json({ status: "success-Order", data: order });
   } catch (error) {
     res.status(400).json({ status: "getOrderList-Fail", message: error.error });
@@ -102,5 +104,10 @@ orderController.updateOrder = async (req, res) => {
     res.status(400).json({ status: "updateOrder-fail", message: error });
   }
 };
+
+
+
+
+
 
 module.exports = orderController;

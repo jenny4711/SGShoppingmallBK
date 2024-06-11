@@ -80,7 +80,7 @@ productController.getProducts = async (req, res) => {
     });
 
     response.data = filteredProducts;
-console.log(filteredProducts,'filteredProducts')
+
       return res.status(200).json(response);
   } catch (error) {
       res.status(400).json({ status: 'getProducts-fail', message: error.message });
